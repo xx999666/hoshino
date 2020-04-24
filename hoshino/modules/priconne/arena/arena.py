@@ -91,7 +91,7 @@ def get_true_id(quick_key:str, user_id:int) -> str:
     if not isinstance(quick_key, str) or len(quick_key) != 5:
         return None
     qkey = (quick_key + '===').encode()
-    qkey = int.from_bytes(base64.b32decode(qkey, casefold=True), 'little')
+    qkey = int.from_bytes(base64.b32decode(qkey, casefold=True, map01=b'I'), 'little')
     qkey ^= mask
     return quick_key_dic.get(qkey, None)
 
@@ -101,7 +101,7 @@ def __get_auth_key():
     return config["AUTH_KEY"]
 
 
-async def do_query(id_list, user_id):
+async def do_query(id_list, user_id, region=1):
     
     id_list = [ x * 100 + 1 for x in id_list ]
     logger.debug(f'id_list={id_list}')
@@ -110,14 +110,18 @@ async def do_query(id_list, user_id):
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36',
         'authorization': __get_auth_key()
     }
-    payload = {"_sign": "a", "def": id_list, "nonce": "a", "page": 1, "sort": 1, "ts": int(time.time()), "region": 1}
+    payload = {"_sign": "a", "def": id_list, "nonce": "a", "page": 1, "sort": 1, "ts": int(time.time()), "region": region}
     logger.info(f'Arena query {payload=}')
-    resp = await aiorequests.post('https://api.pcrdfans.com/x/v1/search', headers=header, json=payload)
-    res = await resp.json()
-    logger.debug(f'len(res)={len(res)}')
+    try:
+        resp = await aiorequests.post('https://api.pcrdfans.com/x/v1/search', headers=header, json=payload)
+        res = await resp.json()
+        logger.debug(f'len(res)={len(res)}')
+    except Exception as e:
+        logger.exception(e)
+        return None
 
     if res['code']:
-        logger.error(f"Arena query failed. \nResponse={res}")
+        logger.error(f"Arena query failed.\nResponse={res}\nPayload={payload}")
         return None
 
     res = res['data']['result']

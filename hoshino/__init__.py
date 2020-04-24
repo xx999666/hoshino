@@ -3,10 +3,10 @@ from os import path
 import logging
 import nonebot
 
+os.makedirs(os.path.expanduser('~/.hoshino'), exist_ok=True)
 from .log import logger
 
 def init(config) -> nonebot.NoneBot:
-    os.makedirs(os.path.expanduser('~/.hoshino'), exist_ok=True)
 
     nonebot.init(config)
     bot = nonebot.get_bot()
@@ -28,3 +28,9 @@ def init(config) -> nonebot.NoneBot:
 
 def get_bot() -> nonebot.NoneBot:
     return nonebot.get_bot()
+
+
+from nonebot import CommandSession
+
+from .service import Service, Privilege
+from .res import R
