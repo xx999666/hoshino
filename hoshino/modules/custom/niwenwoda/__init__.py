@@ -27,6 +27,7 @@ async def handle(bot, context):
         msg = message[2:].split('你答', 1)
         if len(msg) == 1:
             await bot.send(context, '发送“我问xxx你答yyy”我才能记住', at_sender=False)
+            return
         q, a = msg
         if q not in answers:
             answers[q] = {}
