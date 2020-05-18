@@ -2,7 +2,7 @@ import random
 from hoshino import R, CommandSession,Service
 
 
-sv=Service('chooseone')
+sv=Service('chooseone',enable_on_default=False)
 
 
 @sv.on_message('group')

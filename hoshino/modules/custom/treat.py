@@ -2,7 +2,7 @@
 import random
 from hoshino import R, CommandSession,Service
 
-sv1=Service('justplay')
+sv1=Service('justplay',enable_on_default=False)
 qks_url = ["granbluefantasy.jp"]
 qksimg = R.img('priconne/quick/qksimg.jpg').cqcode
 nothing = R.img('priconne/quick/我什么都没有.png').cqcode
