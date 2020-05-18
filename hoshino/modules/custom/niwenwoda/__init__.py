@@ -66,7 +66,6 @@ async def handle(bot, context):
         ans = answers.get(q)
         if ans is None:
             await bot.send(context, f'我不记得有这个问题', at_sender=False)
-
         specific = union(context['group_id'], context['user_id'])
         a = ans.get(specific)
         if a:
@@ -82,7 +81,7 @@ async def handle(bot, context):
 
         if not sv.check_priv(context, required_priv=Priv.ADMIN):
             await bot.send(context, f'只有管理员才能删除别人的问题', at_sender=False)
-
+            return
         wild = union(context['group_id'], 1)
         a = ans.get(wild)
         if a:

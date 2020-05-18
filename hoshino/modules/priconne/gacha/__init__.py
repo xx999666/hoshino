@@ -97,7 +97,7 @@ async def check_tenjo_num(session):
         await session.finish(TENJO_EXCEED_NOTICE, at_sender=True)
 
 
-@sv.on_command('gacha_1', deny_tip=GACHA_DISABLE_NOTICE, aliases=gacha_1_aliases, only_to_me=True)
+@sv.on_command('gacha_1', deny_tip=GACHA_DISABLE_NOTICE, aliases=gacha_1_aliases, only_to_me=False)
 async def gacha_1(session:CommandSession):
 
     await check_jewel_num(session)
@@ -117,7 +117,7 @@ async def gacha_1(session:CommandSession):
     await session.send(f'素敵な仲間が増えますよ！\n{res}\n{SWITCH_POOL_TIP}', at_sender=True)
 
 
-@sv.on_command('gacha_10', deny_tip=GACHA_DISABLE_NOTICE, aliases=gacha_10_aliases, only_to_me=True)
+@sv.on_command('gacha_10', deny_tip=GACHA_DISABLE_NOTICE, aliases=gacha_10_aliases, only_to_me=False)
 async def gacha_10(session:CommandSession):
     SUPER_LUCKY_LINE = 170
 
@@ -152,7 +152,7 @@ async def gacha_10(session:CommandSession):
     await silence(session.ctx, silence_time)
 
 
-@sv.on_command('gacha_300', deny_tip=GACHA_DISABLE_NOTICE, aliases=gacha_300_aliases, only_to_me=True)
+@sv.on_command('gacha_300', deny_tip=GACHA_DISABLE_NOTICE, aliases=gacha_300_aliases, only_to_me=False)
 async def gacha_300(session:CommandSession):
 
     await check_tenjo_num(session)
