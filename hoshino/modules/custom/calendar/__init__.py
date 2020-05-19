@@ -5,12 +5,12 @@ svjp = Service('calendar-jp', enable_on_default=False)
 svbl = Service('calendar-bili', enable_on_default=False)
 
 
-@svjp.scheduled_job('cron', minute='02', jitter=30)
+@svjp.scheduled_job('cron', minute='08', jitter=20)
 async def jp_check_ver():
     check_ver(svjp, 'jp')
 
 
-@svbl.scheduled_job('cron', minute='02', jitter=30)
+@svbl.scheduled_job('cron', minute='02', jitter=20)
 async def bl_check_ver():
     check_ver(svbl, 'bili')
 
@@ -38,7 +38,7 @@ async def look_jp_calendar(bot, ctx, match):
         await bot.send(ctx, db_message(svjp, 'jp', 'all'), at_sender=True)
 
 
-@svbl.on_rex(r'^[b国]服(当前|预定)?日程$', normalize=True, event='group')
+@svbl.on_rex(r'^[bB国]服(当前|预定)?日程$', normalize=True, event='group')
 async def look_bilibili_calendar(bot, ctx, match):
     is_now = match.group(1) == '当前'
     is_future = match.group(1) == '预定'

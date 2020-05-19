@@ -91,8 +91,10 @@ def campaign_logout(campaign, value):
 def db_message(sv, serid, tense='all', lastday=7):
     if serid == 'bili':
         database_path = bililist[2]
+        fmsg='B服日程'
     if serid == 'jp':
         database_path = jplist[2]
+        fmsg='日服日程'
     if not os.path.exists(database_path):
         updateDB(sv, serid)
     db = sqlite3.connect(database_path)
@@ -151,9 +153,9 @@ def db_message(sv, serid, tense='all', lastday=7):
                 title, stime, etime)
 
     if tense == 'all':
-        fmsg = '\n'+cmsg1+'\n'+cmsg2+'\n'+emsg1+'\n'+emsg2
+        fmsg += '\n'+cmsg1+'\n'+cmsg2+'\n'+emsg1+'\n'+emsg2
     if tense == 'future':
-        fmsg = '\n'+cmsg2+'\n'+emsg2
+        fmsg += '\n'+cmsg2+'\n'+emsg2
     if tense == 'now':
-        fmsg = '\n'+cmsg1+'\n'+emsg1
+        fmsg += '\n'+cmsg1+'\n'+emsg1
     return fmsg
