@@ -1,6 +1,6 @@
-from hoshino import R, CommandSession, util,Service
+from hoshino import R, CommandSession, util, Service
 
-sv=Service('query')
+sv = Service('query')
 p1 = R.img('priconne/quick/tqian.png').cqcode
 p2 = R.img('priconne/quick/tzhong.png').cqcode
 p3 = R.img('priconne/quick/thou.png').cqcode
@@ -9,8 +9,8 @@ p5 = R.img('priconne/quick/bzhong.png').cqcode
 p6 = R.img('priconne/quick/bhou.png').cqcode
 @sv.on_rex(r'^([台国b])服?([前中后])rank表?', normalize=True, event='group')
 async def rank_sheet(bot, ctx, match):
-    is_tw = match.group(1)=='台'
-    is_b = match.group(1)!='台'
+    is_tw = match.group(1) == '台'
+    is_b = match.group(1) != '台'
     is_qian = match.group(2) == '前'
     is_zhong = match.group(2) == '中'
     is_hou = match.group(2) == '后'
@@ -21,23 +21,23 @@ async def rank_sheet(bot, ctx, match):
         if is_tw:
             if is_qian:
                 await bot.send(ctx, f'台服前卫rank表：\n{p1}\nby 无羽', at_sender=True)
-                await util.silence(session.ctx, 60)
+                await util.silence(ctx, 60)
             if is_zhong:
                 await bot.send(ctx, f'台服中卫rank表：\n{p2}\nby 无羽', at_sender=True)
-                await util.silence(session.ctx, 60)
+                await util.silence(ctx, 60)
             if is_hou:
                 await bot.send(ctx, f'台服后卫rank表：\n{p3}\nby 无羽', at_sender=True)
-                await util.silence(session.ctx, 60)
+                await util.silence(ctx, 60)
         if is_b:
             if is_qian:
                 await bot.send(ctx, f'b服前卫rank表：\n{p4}\nby 席巴鸽', at_sender=True)
-                await util.silence(session.ctx, 60)
+                await util.silence(ctx, 60)
             if is_zhong:
                 await bot.send(ctx, f'b服中卫rank表：\n{p5}\nby 席巴鸽', at_sender=True)
-                await util.silence(session.ctx, 60)
+                await util.silence(ctx, 60)
             if is_hou:
                 await bot.send(ctx, f'b服后卫rank表：\n{p6}\nby 席巴鸽', at_sender=True)
-                await util.silence(session.ctx, 60)
+                await util.silence(ctx, 60)
 
 
 @sv.on_command('arena_miner', aliases=('挖矿', 'jjc钻石', '竞技场钻石', 'jjc钻石查询', '竞技场钻石查询'))
@@ -77,7 +77,6 @@ async def arena_miner(session: CommandSession):
     await session.send(messages, at_sender=True)
 
 
-
 yukari_pic = R.img('priconne/quick/yukari.jpg').cqcode
 YUKARI_SHEET = f'''
 {yukari_pic}
@@ -91,7 +90,8 @@ async def yukari(session: CommandSession):
     await session.send(YUKARI_SHEET, at_sender=True)
     await util.silence(session.ctx, 60)
 
-@sv.on_command('star',aliases=('星级表','升星表'))
+
+@sv.on_command('star', aliases=('星级表', '升星表'))
 async def star(session: CommandSession):
     await session.send(R.img('priconne/quick/star.jpg').cqcode, at_sender=True)
     await util.silence(session.ctx, 60)
